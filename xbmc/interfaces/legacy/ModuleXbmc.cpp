@@ -46,9 +46,20 @@
 #include "utils/XTimeUtils.h"
 #include "utils/log.h"
 
+#include "DatabaseManager.h"
+#include "TextureDatabase.h"
+#include "addons/AddonDatabase.h"
+#include "music/MusicDatabase.h"
+#include "pvr/PVRDatabase.h"
+#include "pvr/epg/EpgDatabase.h"
+#include "video/VideoDatabase.h"
+#include "view/ViewDatabase.h"
+
 #include <vector>
 
 using namespace KODI;
+using namespace ADDON;
+using namespace PVR;
 
 namespace XBMCAddon
 {
@@ -320,6 +331,43 @@ namespace XBMCAddon
       CGUIInfoManager& infoMgr = CServiceBroker::GetGUI()->GetInfoManager();
       int ret = infoMgr.TranslateString(infotag);
       return infoMgr.GetImage(ret, WINDOW_INVALID);
+    }
+
+    String getDatabaseName(const char * dbtype)
+    {
+      XBMC_TRACE;
+      String result;
+
+      if (StringUtils::CompareNoCase(dbtype, "addon") == 0)
+      {
+        result = CServiceBroker::GetDatabaseManager().GetFullDatabaseName(CAddonDatabase::GetDefaultBaseDBName());
+      }
+      else if (StringUtils::CompareNoCase(dbtype, "epg") == 0)
+      {
+        result = CServiceBroker::GetDatabaseManager().GetFullDatabaseName(CPVREpgDatabase::GetDefaultBaseDBName());
+      }
+      else if (StringUtils::CompareNoCase(dbtype, "music") == 0)
+      {
+        result = CServiceBroker::GetDatabaseManager().GetFullDatabaseName(CMusicDatabase::GetDefaultBaseDBName());
+      }
+      else if (StringUtils::CompareNoCase(dbtype, "pvr") == 0)
+      {
+        result = CServiceBroker::GetDatabaseManager().GetFullDatabaseName(CPVRDatabase::GetDefaultBaseDBName());
+      }
+      else if (StringUtils::CompareNoCase(dbtype, "texture") == 0)
+      {
+        result = CServiceBroker::GetDatabaseManager().GetFullDatabaseName(CTextureDatabase::GetDefaultBaseDBName());
+      }
+      else if (StringUtils::CompareNoCase(dbtype, "video") == 0)
+      {
+        result = CServiceBroker::GetDatabaseManager().GetFullDatabaseName(CVideoDatabase::GetDefaultBaseDBName());
+      }
+      else if (StringUtils::CompareNoCase(dbtype, "viewmode") == 0)
+      {
+        result = CServiceBroker::GetDatabaseManager().GetFullDatabaseName(CViewDatabase::GetDefaultBaseDBName());
+      }
+
+      return result;
     }
 
     void playSFX(const char* filename, bool useCached)

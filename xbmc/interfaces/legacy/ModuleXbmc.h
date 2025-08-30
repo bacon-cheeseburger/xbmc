@@ -465,6 +465,33 @@ namespace XBMCAddon
 #ifdef DOXYGEN_SHOULD_USE_THIS
     ///
     /// \ingroup python_xbmc
+    /// @brief \python_func{ xbmc.getdatabasename(dbtype) }
+    /// Get full database name of the supplied type currently in-use.
+    ///
+    /// @param name                  string - database type of the full
+    ///                              database name you want returned.
+    /// @return                      The full database name currently in-use.
+    /// @note Database types can be: addon, epg, music, pvr, texture, video,
+    ///       viewmode.
+    ///
+    ///
+    /// ------------------------------------------------------------------------
+    ///
+    /// **Example:**
+    /// ~~~~~~~~~~~~~{.py}
+    /// ..
+    /// video_database = xbmc.getdatabasename('video')
+    /// ..
+    /// ~~~~~~~~~~~~~
+    ///
+    getDatabaseName(...);
+#else
+    String getDatabaseName(const char* dbtype);
+#endif
+
+#ifdef DOXYGEN_SHOULD_USE_THIS
+    ///
+    /// \ingroup python_xbmc
     /// @brief \python_func{ xbmc.playSFX(filename,[useCached]) }
     /// Plays a wav file by filename
     ///
